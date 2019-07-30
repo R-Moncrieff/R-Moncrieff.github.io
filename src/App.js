@@ -9,11 +9,16 @@ import FiberManualRecord from '@material-ui/icons/FiberManualRecord';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
-import html2canvas from 'html2canvas';
 
+import html2canvas from 'html2canvas';
+import { saveAs } from 'file-saver';
 
 import './App.css';
 import logo from './Google_logo.svg';
+
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-144838754-1');
+ReactGA.pageview(window.location.pathname + window.location.search);
 
 const AppSize = {
   width: 400,
@@ -150,13 +155,14 @@ function App() {
   const onDownload = () => {
     html2canvas(ref.current).then(canvas => {
       let dataUrl = canvas.toDataURL("image/png");
+      saveAs(dataUrl, "G-Conference");
 
-      var link = document.createElement('a');
-      link.href = dataUrl;
-      link.download = 'G-Conference';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
+      // var link = document.createElement('a');
+      // link.href = dataUrl;
+      // link.download = 'G-Conference';
+      // document.body.appendChild(link);
+      // link.click();
+      // document.body.removeChild(link);
 
       console.log("Done");
     });
